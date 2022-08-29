@@ -3,30 +3,17 @@ import * as React from "react";
 interface CountDisplayProps {
   count: number;
 }
-interface CountDisplayStates {}
 
-class CountDisplay extends React.Component<
-  CountDisplayProps,
-  CountDisplayStates
-> {
-  constructor(props: CountDisplayProps) {
-    super(props);
-    console.log("[Mounting]: CountDisplay / In constructor");
-  }
+const CountDisplay: React.FC<CountDisplayProps> = ({ count }) => {
+  React.useEffect(() => {
+    console.log("[Rendered] CountDisplay / useEffect");
+  });
 
-  componentDidUpdate() {
-    console.log("[Uptading]: CountDisplay / componentDidUpdate");
-  }
-  componentDidMount() {
-    console.log("[Mounting]: CountDisplay / componentDidMount");
-  }
-  componentWillUnmount() {
-    console.log("[Unmounting]: CountDisplay / componentWillUnmount");
-  }
+  React.useEffect(() => {
+    console.log("[Mounted] CountDisplay / useEffect");
+  }, []);
 
-  render() {
-    return <h3>Count: {this.props.count}</h3>;
-  }
-}
+  return <h3>FC Count: {count}</h3>;
+};
 
 export default CountDisplay;

@@ -1,6 +1,8 @@
 import * as React from "react";
-import { setConstantValue } from "typescript";
 import CountDisplay from "./CountDisplay";
+import { useCounter } from "./hooks/useCounter";
+import useWindowWidth from "./hooks/useWindowWidth";
+import useToggle from "./hooks/ustToggle";
 
 interface CounterProps {
   title: string;
@@ -10,45 +12,28 @@ interface CounterStates {
   hideCount: boolean;
 }
 
-class Counter extends React.Component<CounterProps, CounterStates> {
-  constructor(props: CounterProps) {
-    super(props);
-    this.state = {
-      num: 0,
-      hideCount: false,
-    };
+const Counter: React.FC<CounterProps> = ({title}) => {
+  const { count, add, minus } = useCounter();
+  const [hide, toggle] = useToggle();
+  const width = useWindowWidth();
 
-    console.log("[Mounting] Counter / In constructor");
-  }
+  React.useEffect(() => {
+    console.log("[Rendered] Counter / useEffect");
+  });
 
-  handleClick = () => {
-    this.setState((prev) => {
-      return { num: prev.num + 1 };
-    });
-  };
-  handleToggle = () => {
-    this.setState((prev) => {
-      return { hideCount: !prev.hideCount };
-    });
-  };
+  React.useEffect(() => {
+    console.log("[Mounted] Counter / useEffect");
+  }, []);
 
-  componentDidUpdate() {
-    console.log("[Uptading]: Counter / componentDidUpdate");
-  }
-  componentDidMount() {
-    console.log("[Mounting]: Counter / componentDidMount");
-  }
-
-  render() {
-    return (
-      <div>
-        <h1>{this.props.title}</h1>
-        {!this.state.hideCount && <CountDisplay count={this.state.num} />}
-        <button onClick={this.handleToggle}>Toggle</button>
-        <button onClick={this.handleClick}>Plus</button>
-      </div>
-    );
-  }
+  return (
+    <div>
+      <h1>{title} / {width}</h1>
+      {!hide && <CountDisplay count={count} />}
+      <button onClick={toggle}>Toggle</button>
+      <button onClick={add}>Add</button>
+      <button onClick={minus}>Minus</button>
+    </div>
+  );
 }
 
 export default Counter;
