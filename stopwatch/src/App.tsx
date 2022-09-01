@@ -1,7 +1,23 @@
-import React from 'react';
+import styled from "@emotion/styled";
+import { Global } from "@emotion/react";
+import React from "react";
+import Stopwatch from "./Stopwatch";
+import { reset } from "./styles/reset";
 
 function App() {
-  return (<></>)
+  return (
+    <Container>
+      <Global styles={reset} />
+      <Stopwatch />
+    </Container>
+  );
 }
+
+const Container = styled.div`
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+`;
 
 export default App;
